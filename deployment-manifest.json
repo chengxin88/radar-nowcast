@@ -1,0 +1,8 @@
+{
+  "release": "20261015-radar-brief-v5.13",
+  "previous": "20261015-radar-brief-v5.12",
+  "change": "Remove the new-echo follow-up sentence from all three push messages",
+  "files": {
+    "app/rolling_nowcast.py": "09f9e56c3a661a2e6764da62e36f8d6068e94c483a84ff135ece5b60b814e7fb"
+  }
+}

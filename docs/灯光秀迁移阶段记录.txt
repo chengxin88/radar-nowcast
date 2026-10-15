@@ -1,0 +1,57 @@
+灯光秀值守：阿里云迁移版
+
+部署目录：/home/gbamwf/lightshow-duty
+服务器：47.107.46.89，SSH连接名 aliyun-codex
+运行账号：gbamwf；独立Python 3.10环境，不修改系统Python。
+
+当前状态
+仅发过一条标注“阿里云迁移测试”的群消息，接口返回 errcode=0。
+AUTO_PUSH_ENABLED=0；定时推送、短临推送、自动补发、值守告警均关闭。
+私有webhook只保存在服务器config.env（权限600），不包含在此源码包。
+计划任务配置已准备好，但没有安装为活动cron任务。
+
+每天长期运行的安排（启用后）
+07:15启动08时稿，07:30读取实时资料后发布，活动日期为当天。
+15:15启动16时稿，15:30读取实时资料后发布，活动日期为当天。
+19:15启动20时稿，19:30读取实时资料后发布，活动日期为次日。
+每次发布后5、15、25分钟检查发送状态，成功则安静退出；明确失败只补发未成功的段落。
+短临额外推送默认不安装；原15分钟发报也不启用。
+内网闪电默认禁用并明确写缺测，不能写成“未监测到闪电”。
+
+重要修复
+1. 企业微信HTTPS webhook替换本机OpenClaw；严格检查errcode=0。
+2. 2048 UTF-8字节分段、每分钟20条以内持久限速，配置和异常脱敏。
+3. SQLite记录每个任务/每段发送；结果未知不自动重发，永久失败不反复重试。
+4. 定时、手动、短临和值守统一锁；真实退出码；稿件版本不覆盖已发送历史。
+5. 18时后短临/手动更新明确当天活动，20时定时稿明确次日。
+6. 预警缺测/过期不能写“无预警”；关键资料不满足发布条件时阻止正式发送。
+7. 资料新鲜度、迟到发报截止、稿件过期保护；原气象风险阈值保留。
+8. 短临否定文字识别、明确雷电信号，以及模板判定标准同步。
+9. 雷达空帧/单帧/无可靠相关性不虚构移动；颜色背景过滤；跨午夜日期正确。
+10. EC探测与下载换源、原子缓存和字段验证；新云缓存保留7天，正式稿长期保存。
+
+查看状态（不发送）
+ssh aliyun-codex '~/lightshow-duty/run.sh status'
+ssh aliyun-codex '~/lightshow-duty/schedule.sh status'
+
+只出稿验收（不发送；唯一新目录）
+ssh aliyun-codex '~/lightshow-duty/run.sh run --slot 08 --date YYYY-MM-DD --dry-run'
+ssh aliyun-codex '~/lightshow-duty/run.sh run --slot 16 --date YYYY-MM-DD --dry-run'
+ssh aliyun-codex '~/lightshow-duty/run.sh run --slot 20 --date YYYY-MM-DD --dry-run'
+
+待用户要求正式启用后，才执行：
+ssh aliyun-codex '~/lightshow-duty/schedule.sh enable'
+关闭：
+ssh aliyun-codex '~/lightshow-duty/schedule.sh disable'
+启用/关闭仅维护本项目的cron区块，不改动其他服务器任务。
+
+目录
+current/：当前源码版本，releases/：保留的源码版本。
+drafts/：不可覆盖的草稿和生成日志；history/：已全部发送成功的历史稿。
+state/：SQLite发送与限速记录；cache/：气象资料缓存；logs/：调度运行日志。
+deploy/：入口脚本模板；tests/：不联网、不发消息的回归测试。
+requirements.lock.txt：已在阿里云安装的依赖版本。
+
+消息投递返回成功代表企业微信接受请求，并不代表每位群成员已经阅读。
+读取超时可能已投递，记录为unknown并停止自动重发；需人工核实后处理。
+若webhook本身失效，群内告警也可能无法送达，应从服务器日志查看错误。

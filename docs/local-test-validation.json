@@ -1,0 +1,28 @@
+{
+  "date": "2026-10-15",
+  "python": "3.12.3",
+  "environment": "existing local scientific Python; all live socket connections blocked",
+  "tests_run": 286,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "packages": {
+    "numpy": "2.5.3",
+    "requests": "2.34.2",
+    "Pillow": "12.3.0",
+    "eccodes": "2.48.0",
+    "ecmwf-opendata": "0.3.34"
+  },
+  "aliyun_runtime": {
+    "python": "3.10.12",
+    "numpy": "2.2.6",
+    "requests": "2.34.2",
+    "Pillow": "12.3.0",
+    "eccodes": "2.49.0",
+    "ecmwf-opendata": "0.3.34"
+  },
+  "limits": "Local tests do not reproduce the exact deployed lock environment or verify live forecast skill; no real notifications or production schedule changes.",
+  "source_file_hashes_verified": 60,
+  "source_files_changed": 0,
+  "original_text_encodings_preserved": true
+}

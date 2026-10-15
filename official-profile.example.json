@@ -1,0 +1,41 @@
+{
+  "target": {
+    "lat": 22.543,
+    "lon": 114.059,
+    "radius_km": 3
+  },
+  "area": "福田区",
+  "area_aliases": [
+    "福田"
+  ],
+  "city": "深圳",
+  "station_name": "深圳国家基本气象站（福田区，区域参考）",
+  "yjt_station": {
+    "name": "市民中心",
+    "subdistrict": "莲花街道",
+    "areaid": "5949302",
+    "target": {
+      "lat": 22.543,
+      "lon": 114.059,
+      "radius_km": 3
+    }
+  },
+  "feeds": {
+    "hourly": [
+      "szWeather/fenquyubao/MESISarea_ft.js",
+      "WF_ft"
+    ],
+    "observation": [
+      "szWeather/szOssmo.js",
+      "SZ121_szOssmo"
+    ],
+    "alarm": [
+      "szWeather/alarm/szAlarm.js",
+      "SZ121_AlarmInfo"
+    ],
+    "tips": [
+      "szWeather/szImportantTips.js",
+      "SZ121_szImportantTips"
+    ]
+  }
+}
